@@ -5,6 +5,7 @@ import pygame as pg
 # инициализация шрифта, для написания победителя
 pg.font.init()
 # сам шрифт
+pg.display.set_caption('Шахматы')
 font = pg.font.SysFont('comicsansms.ttf', 50)
 # размер окна
 size = (790, 790)
