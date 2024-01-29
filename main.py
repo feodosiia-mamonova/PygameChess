@@ -2,6 +2,7 @@
 import sys
 # импортирование главной библиотеки pygame 
 import pygame as pg
+
 # инициализация шрифта, для написания победителя
 pg.font.init()
 # сам шрифт
@@ -75,7 +76,6 @@ def draw_pieces_start():
             screen.blit(king_b, black_pieces[piece])
 
 
-
 def check_options(pieces, turn):
     '''
     функция для проверки всех допустимых параметров фигур на доске
@@ -83,12 +83,12 @@ def check_options(pieces, turn):
     moves_list = []
     all_moves_list = []
     for piece, location in pieces.items():
-        if piece in ('pawn_a', 'pawn_b','pawn_c','pawn_d','pawn_e','pawn_f','pawn_g','pawn_h'):
+        if piece in ('pawn_a', 'pawn_b', 'pawn_c', 'pawn_d', 'pawn_e', 'pawn_f', 'pawn_g', 'pawn_h'):
             moves_list = check_pawn(location, turn)
         # проверка фигры ладьи    
         elif piece in ('rook_a', 'rook_h'):
             moves_list = check_rook(location, turn)
-        #проверка фигуры лощади на доске
+        # проверка фигуры лощади на доске
         elif piece in ('horse_b', 'horse_g'):
             moves_list = check_knight(location, turn)
         # проверка фигуры слона на доске
@@ -101,9 +101,8 @@ def check_options(pieces, turn):
         elif piece == 'king':
             moves_list = check_king(location, turn)
         all_moves_list.append(moves_list)
-    #вернем список all_moves_list
+    # вернем список all_moves_list
     return all_moves_list
-
 
 
 def check_king(position, color):
@@ -122,14 +121,14 @@ def check_king(position, color):
     else:
         friends_list = black_pieces.values()
 
-    # эти 8 пар чисел отвечают за проверку наличия короля на доске. Король может переместиться только на одну клетку в любом направлении
+    # эти 8 пар чисел отвечают за проверку наличия короля на доске. Король может переместиться только на одну
+    # клетку в любом направлении
     targets = [(100, 0), (100, 100), (100, -100), (-100, 0), (-100, 100), (-100, -100), (0, 100), (0, -100)]
     for i in range(8):
         target = (x + targets[i][0], y + targets[i][1])
         if target not in friends_list and 8 <= target[0] <= 708 and 3 <= target[1] <= 703:
             moves_list.append(target)
     return moves_list
-
 
 
 def check_queen(position, color):
@@ -141,6 +140,7 @@ def check_queen(position, color):
     for i in range(len(second_list)):
         moves_list.append(second_list[i])
     return moves_list
+
 
 # check bishop moves
 def check_bishop(position, color):
@@ -185,7 +185,6 @@ def check_bishop(position, color):
     return moves_list
 
 
-
 # проверка ходов ладьи
 def check_rook(position, color):
     moves_list = []
@@ -197,7 +196,7 @@ def check_rook(position, color):
     else:
         friends_list = black_pieces.values()
         enemies_list = white_pieces.values()
-    for i in range(4): # вниз, вверх, вправо, влево
+    for i in range(4):  # вниз, вверх, вправо, влево
         path = True
         chain = 1
         if i == 0:
@@ -222,7 +221,6 @@ def check_rook(position, color):
             else:
                 path = False
     return moves_list
-
 
 
 # check valid pawn moves
@@ -256,8 +254,6 @@ def check_pawn(position, color):
     return moves_list
 
 
-
-
 def check_knight(position, color):
     '''
     # проверка допустимых ходов коня
@@ -278,8 +274,6 @@ def check_knight(position, color):
     return moves_list
 
 
-
-
 def check_valid_moves():
     '''
     проверка правильности хода для выбранной фигуры
@@ -290,7 +284,6 @@ def check_valid_moves():
         options_list = black_options
     valid_options = options_list[selection]
     return valid_options
-
 
 
 def draw_valid(moves):
@@ -305,7 +298,6 @@ def draw_valid(moves):
         pg.draw.circle(screen, color, (moves[i][0] // 100 * 100 + 50, moves[i][1] // 100 * 100 + 50), 5)
 
 
-
 def draw_game_over():
     '''
     функция для отображения на экране окна, где говорится, кто выиграл и нажмите ENTER для новой игры
@@ -318,8 +310,6 @@ def draw_game_over():
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     # нажать ENTER для того чтобы начать новую игру
     screen.blit(font.render(f'Press ENTER to Restart!', True, 'white'), (210, 240))
-
-
 
 
 def draw_pieces():
@@ -371,8 +361,8 @@ while not done:
         if event.type == pg.QUIT:
             done = True
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and not game_over:
-            x_coord = event.pos[0]// 100*100 + 8
-            y_coord = event.pos[1]// 100*100 + 3
+            x_coord = event.pos[0] // 100 * 100 + 8
+            y_coord = event.pos[1] // 100 * 100 + 3
             click_coords = (x_coord, y_coord)
             # print(1)
             if turn_step <= 1:
@@ -446,7 +436,7 @@ while not done:
             game_over = True
             draw_game_over()
 
-        pg.display.flip()    
+        pg.display.flip()
         clock.tick(60)
 
 pg.quit()
